@@ -1,6 +1,7 @@
 # reference-database-genertors/CRABS
 > original web:https://github.com/gjeunen/reference_database_creator
-#according to your species list, download all sequences from nucleotide database in ncbi which includes amplicons, wgs and so on.
+
+## according to your species list, download all sequences from nucleotide database in ncbi which includes amplicons, wgs and so on.
 ...
 crabs db_download --source ncbi --database nucleotide --query '12S[All Fields] AND ("1"[SLEN] : "50000"[SLEN])' --species elas_parts.csv --output elas_parts.fasta --keep_original yes --email fangliufree@gmail.com --batchsize 50000
 ...
