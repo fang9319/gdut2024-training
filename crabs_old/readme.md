@@ -1,3 +1,4 @@
+# crabs旧版脚本
 ## ncbi:根据准备好的物种名录，在ncbi上下载序列，一般使用nucleotide数据库.
 ```bash 
 crabs db_download --source ncbi --database nucleotide --query '12S[All Fields] AND ("1"[SLEN] : "50000"[SLEN])' --species elas_parts.csv --output elas_parts.fasta --keep_original yes --email fangliufree@gmail.com --batchsize 50000
@@ -40,29 +41,21 @@ crabs dereplicate --input all_assigned.tsv --output assigned_uniq.tsv --method u
 ```
 ## 筛选--去除过小、过大、寡碱基过多的序列
 ```bash
-crabs seq_cleanup --input assigned_uniq.tsv --output output.tsv --minlen 100 --maxlen 1000 --maxns 0 --enviro yes --species yes --nans 0
+crabs seq_cleanup --input assigned_uniq.tsv --output assigned_uniq_filtered.tsv --minlen 100 --maxlen 1000 --maxns 0 --enviro yes --species yes --nans 0
 ```
-## this is optional, include or exclude some sequences you want to exclude or include
+## 输出：vsearch适用格式
 ```bash
-crabs db_subset --input input.tsv --output output.tsv --database userlist.txt --subset include
+crabs tax_format --input assigned_uniq_filtered.tsv --output vsearch_reference.fasta --format sintax
 ```
-## generate a vsearch reference database
+## 输出：dada2适用格式
 ```bash
-crabs tax_format --input output.tsv --output vsearch_reference.fasta --format sintax
+crabs tax_format --input assigned_uniq_filtered.tsv --output dada2_reference.fasta --format dad
 ```
-## generate a dada2 reference database
+## 输出：makeblastdb适用格式
 ```bash
-crabs tax_format --input assigned_uniq_cleaned.tsv --output dada2_reference.fasta --format dad
+Rscript blast_reference.R -i assigned_uniq_filtered.tsv -o blast_reference.fasta
 ```
-## generate a blast database step1
+## 目标序列被下载比例
 ```bash
-Rscript blast_reference.R -i output.tsv -o blast_reference.fasta
-```
-## generate a blast database step2
-```bash
-makeblastdb -in blast_reference.fasta -parse_seqids -dbtype nucl -blastdb_version 5
-```
-## generate a stats for this database
-```bash
-Rscript generate_stats.R -r output.tsv -q diqi.csv
+Rscript generate_stats.R -r assigned_uniq_filtered.tsv -q elas_parts.csv
 ```
