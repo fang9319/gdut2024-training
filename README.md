@@ -4,4 +4,4 @@
 > crabs: https://github.com/gjeunen/reference_database_creator
 > obitools: https://pythonhosted.org/OBITools/welcome.html
 
-## 本文件包含三个字文件分别为：_crabs-old_ 为旧版本crabs代码使用于v1.0.0以前版本；_crabs-new_ 为新版适用于v1.0.0以后版本；性能上，其最主要区别为导出格式多样化。 _obitools_ 用起来有点儿困难，慎用，代码在这里。
+## 本文件包含三个字文件分别为：_crabs-old_ 为旧版本crabs代码使用于v1.0.0以前版本；_crabs-new_ 为新版适用于v1.0.0以后版本；性能上，其最主要区别为导出格式多样化。 _obitools_ 用起来有点儿困难。
