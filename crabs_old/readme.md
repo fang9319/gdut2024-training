@@ -1,6 +1,3 @@
-# reference-database-genertors
-> original web:https://github.com/gjeunen/reference_database_creator
-
 ## ncbi:根据准备好的物种名录，在ncbi上下载序列，一般使用nucleotide数据库.
 ```bash 
 crabs db_download --source ncbi --database nucleotide --query '12S[All Fields] AND ("1"[SLEN] : "50000"[SLEN])' --species elas_parts.csv --output elas_parts.fasta --keep_original yes --email fangliufree@gmail.com --batchsize 50000
