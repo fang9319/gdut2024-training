@@ -54,11 +54,7 @@ for format in sintax.fasta rdp.fasta idt-fasta.fasta idt-text.txt blast-notax.fa
 ```bash
 crabs --amplicon-length-figure --input filtered.txt --output amplicon-length-figure.png --tax-level 4
 ```
-### （14）建个进化树
-```bash
-crabs --phylogenetic-tree --input filtered.txt --output phylo --tax-level 4 --species 'Carcharodon carcharias+Squalus acanthias'
-```
-### （15）目标序列被下载比例
+### （14）目标序列被下载比例
 ```bash
 crabs --completeness-table --input filtered.txt --output completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species species-list.txt
 ```
