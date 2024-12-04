@@ -24,11 +24,11 @@ crabs --download-taxonomy
 crabs --import --import-format bold --input bold_Chondrichthyes.fasta --names ../names.dmp --nodes ../nodes.dmp --acc2tax ../nucl_gb.accession2taxid --output crabs_bold.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 crabs --import --import-format ncbi --input ncbi_Chondrichthyes.fasta --names ../names.dmp --nodes ../nodes.dmp --acc2tax ../nucl_gb.accession2taxid --output crabs_ncbi.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 crabs --import --import-format mitofish --input mitofish.fasta --names ../names.dmp --nodes ../nodes.dmp --acc2tax ../nucl_gb.accession2taxid --output mitofish.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
-crabs --import --import-format bold --input ../mine.fasta --names ../names.dmp --nodes ../nodes.dmp --acc2tax ../nucl_gb.accession2taxid --output mine.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
+crabs --import --import-format ncbi --input ../mine.fasta --names ../names.dmp --nodes ../nodes.dmp --acc2tax ../nucl_gb.accession2taxid --output mine.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 ```
 ### (7)合并以上下载的所有序列，为了节省时间不加入mitofish
 ```bash
-crabs --merge --input 'crabs_bold.txt;crabs_ncbi.txt;mine.txt' --uniq --output merged.txt
+crabs --merge --input '../crabs_bold.txt;crabs_ncbi.txt;../mine.txt' --uniq --output merged.txt
 ```
 ### (8)根据我们要用的前后引物对所有序列进行切割
 ```bash
