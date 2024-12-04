@@ -9,8 +9,19 @@ done < species_list.txt
 ```bash
 cat *.fasta > combined_sequences.fasta
 ```
-
+### 导入
 ```bash
-obiimport --input-format fasta combined_sequences.fasta > reference_data.obi
+obiimport --input-format fasta combined_sequences.fasta > formatted_sequences.obi
+```
+### 序列命名
+```bash
+obiannotate --taxonomy "formatted_sequences.obi" \
+    --taxonomy-db "path_to_ncbi_taxonomy_database" \
+    --output "annotated_sequences.obi"
+```
+### Index the Database
+```bash
+obiindex --input "annotated_sequences.obi" \
+         --output "reference_database.index"
 ```
 
