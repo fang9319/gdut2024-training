@@ -1,7 +1,7 @@
 ## crabs新版
 ### （1）ncbi:根据准备好的物种名录，在ncbi上下载序列，一般使用nucleotide数据库.
 ```bash 
-crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR Chondrichthyes[All Fields]) AND (mitochondrion[filter] AND ("100"[SLEN] : "25000"[SLEN]))' --species input.txt --output crabs_testing/ncbi_chondrichthyes.fasta --email johndoe@gmail.com --database nucleotide
+crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR Chondrichthyes[All Fields]) AND (mitochondrion[filter] AND ("100"[SLEN] : "25000"[SLEN]))' --species species.txt --output crabs_testing/ncbi_chondrichthyes.fasta --email johndoe@gmail.com --database nucleotide
 ```
 ### （2）embl:下载所有的脊椎动物，这步跳过
 ```bash
