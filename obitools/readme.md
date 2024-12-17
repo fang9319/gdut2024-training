@@ -1,27 +1,60 @@
-## obitools 4 建立数据库，使用obipcr
-### ncbi下载数据
+## obitools 4 处理测序数据
+### 看一下生数据并进行质控
 ```bash
-while read species; do
-    esearch -db nucleotide -query "$species[Organism] AND COI[All Fields]" | efetch -format fasta > "${species// /_}_COI.fasta" || echo "No COI sequences found for $species"
-done < species_list.txt
+#gzip -cd *.gz | head
+head sample1.fastq
+
 ```
-### 合并
+
+### R1、R2端数据合并
 ```bash
-cat *.fasta > combined_sequences.fasta
+obipairing -F sample1.fq -R sample2.fq > paired.fastq
 ```
-### 导入
+### 看一下合并结果
 ```bash
-obiimport --input-format fasta combined_sequences.fasta > formatted_sequences.obi
+seqkit stats paired.fastq
+head paired.fastq
+obicount paired.fastq
 ```
-### 序列命名
+### 保留成功合并的数据
 ```bash
-obiannotate --taxonomy "formatted_sequences.obi" \
-    --taxonomy-db "path_to_ncbi_taxonomy_database" \
-    --output "annotated_sequences.obi"
+obigrep -p 'annotations.mode != "join"' paired.fastq > ali.fastq
 ```
-### Index the Database
+### demultiplex拆分数据
 ```bash
-obiindex --input "annotated_sequences.obi" \
-         --output "reference_database.index"
+obimultiplex -t plate_map.tsv \
+-u unidentified.fastq \
+ali.fastq \
+> ali.assigned.fastq
 ```
+### 去重复
+```bash
+obiuniq -m sample \
+ali.assigned.fastq \
+> ali.assigned.uniq.fasta
+```
+### 去除多余的header
+```bash
+obiannotate -k count -k merged_sample \
+ali.assigned.uniq.fasta \
+> ali.assigned.simple.fasta
+```
+
+### 降噪
+```bash
+obiclean -s sample -r 0.05 -H \
+  ali.assigned.simple.fasta \
+      > ali.assigned.simple.clean.fasta
+```
+
+### 筛选
+```bash
+obigrep -l 150 ali.assigned.simple.clean.fasta \
+    > ali.assigned.simple.clean.c5.l150.fasta
+```
+
+### 命名匹配
+```bash
+
+
 
