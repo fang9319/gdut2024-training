@@ -54,7 +54,26 @@ obigrep -l 150 ali.assigned.simple.clean.fasta \
 ```
 
 ### 命名匹配
+#### vsearch
+```bash
+vsearch --threads 4 --sintax ali.assigned.simple.clean.c5.l150.fasta \
+--db sintax_ref.fasta \ 
+--sintax_cutoff 0.7 --tabbedout sintax.tsv
+```
+#### blast
+```bash
+blastn -task blastn -num_threads 8 -evalue 1000 -word_size 7 -max_target_seqs 500 \
+-db blast_ref.fasta  -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" \
+-out blast.out -query 2nd_final.fasta
+
+printf "qseqid\tsseqidLocal\tevalueLocal\tlengthLocal\tpidentLocal\tnidentLocal\tscoreLocal\tbitscoreLocal\n" \
+> headers
+
+cat headers blast.out > blast_result.tsv
+rm blast.out
+rm headers
+```
+###
 ```bash
 
-
-
+```
