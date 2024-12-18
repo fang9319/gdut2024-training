@@ -3,7 +3,7 @@
 ```bash
 #gzip -cd *.gz | head
 head sample1.fastq
-
+fastqc sample1.fastq
 ```
 
 ### R1、R2端数据合并
