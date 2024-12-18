@@ -58,4 +58,7 @@ crabs --amplicon-length-figure --input filtered.txt --output amplicon-length-fig
 ```bash
 crabs --completeness-table --input filtered.txt --output completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species species-list.txt
 ```
-
+### (15) 预测扩增效果
+```bash
+crabs --amplification-efficiency-figure --input merged.txt --amplicons filtered.txt --forward GTTGGTHAATCTCGTGCCAGC --reverse CATAGTAGGGTATCTAATCCTAGTTTG --output amplification-efficiency.png --tax-group Carcharhiniformes
+```
