@@ -46,23 +46,27 @@ crabs --dereplicate --input aligned.txt --output dereplicated.txt --dereplicatio
 ```bash
 crabs --filter --input dereplicated.txt --output filtered.txt --minimum-length 100 --maximum-length 400 --maximum-n 1 --environmental --no-species-id --rank-na 2
 ```
-### (12)输出
+### (12)筛选自己感兴趣的物种
 ```bash
-for format in sintax.fasta blast-notax.fasta; do crabs --export --input filtered.txt --output chondrichthyes_${format} --export-format ${format%%.*}; done
+crabs --subset --input filtered.txt --output subset.txt --include 'Chondrichthyes'
 ```
-### (13)数据库范围
+### (13)输出
 ```bash
-crabs --amplicon-length-figure --input filtered.txt --output amplicon-length-figure.png --tax-level 4
+for format in sintax.fasta blast-notax.fasta; do crabs --export --input subset.txt --output chondrichthyes_${format} --export-format ${format%%.*}; done
 ```
-### （14）目标序列被下载比例
+### (14)数据库范围
 ```bash
-crabs --completeness-table --input filtered.txt --output figure/completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species split_part_ac.txt
+crabs --amplicon-length-figure --input subset.txt --output amplicon-length-figure.png --tax-level 4
 ```
-### (15) 预测扩增效果
+### (15)目标序列被下载比例
 ```bash
-crabs --amplification-efficiency-figure --input merged.txt --amplicons filtered.txt --forward TCAACCAACCACAAAGACATTGGCAC --reverse AAGATTACAAAAGCGTGGGC --output figure/amplification-efficiency.png --tax-group Carcharhiniformes
+crabs --completeness-table --input subset.txt --output figure/completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species ../species-list.csv
 ```
-### (16) 拷贝到自己的文件夹
+### (16) 预测扩增效果
+```bash
+crabs --amplification-efficiency-figure --input merged.txt --amplicons subset.txt --forward TCAACCAACCACAAAGACATTGGCAC --reverse AAGATTACAAAAGCGTGGGC --output figure/amplification-efficiency.png --tax-group Carcharhiniformes
+```
+### (17) 拷贝到自己的文件夹
 ```bash
 scp -P 8080 -r dell@10.24.22.176:/media/dell/eDNA2/db-training/lzf-COI/figure \
  /Volumes/Elements/1_guanggong_20240424/环境DNA培训课件/try1-db-traning/
