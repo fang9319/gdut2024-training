@@ -28,15 +28,15 @@ crabs --import --import-format ncbi --input ../mine.fasta --names ../names.dmp -
 ```
 ### (7)合并以上下载的所有序列，为了节省时间不加入mitofish
 ```bash
-crabs --merge --input '../crabs_bold.txt;crabs_ncbi.txt;../mine.txt' --uniq --output merged.txt
+crabs --merge --input '../crabs_bold.txt;crabs_ncbi.txt;../mine.txt;mitofish.txt' --uniq --output merged.txt
 ```
 ### (8)根据我们要用的前后引物对所有序列进行切割
 ```bash
-crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward GTTGGTHAATCTCGTGCCAGC --reverse CATAGTAGGGTATCTAATCCTAGTTTG
+crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward TCAACCAACCACAAAGACATTGGCAC --reverse AAGATTACAAAAGCGTGGGC --threads 2
 ```
 ### (9)由于很多序列已经切去了引物区或者引物区识别失败，有用的序列没有被保留，我们通过对齐的方法再次进行筛选和保留
 ```bash
-crabs --pairwise-global-alignment --input merged.txt --amplicons insilico.txt --output aligned.txt --forward GTTGGTHAATCTCGTGCCAGC --reverse CATAGTAGGGTATCTAATCCTAGTTTG --size-select 10000 --percent-identity 0.85 --coverage 0.85
+crabs --pairwise-global-alignment --input merged.txt --amplicons insilico.txt --output aligned.txt --forward TCAACCAACCACAAAGACATTGGCAC --reverse AAGATTACAAAAGCGTGGGC --size-select 10000 --percent-identity 0.85 --coverage 0.85
 ```
 ### (10)去重复，三种方式，推荐选
 ```bash
@@ -44,11 +44,11 @@ crabs --dereplicate --input aligned.txt --output dereplicated.txt --dereplicatio
 ```
 ### (11)筛选--去除过小、过大、寡碱基过多的序列
 ```bash
-crabs --filter --input dereplicated.txt --output filtered.txt --minimum-length 100 --maximum-length 300 --maximum-n 1 --environmental --no-species-id --rank-na 2
+crabs --filter --input dereplicated.txt --output filtered.txt --minimum-length 100 --maximum-length 400 --maximum-n 1 --environmental --no-species-id --rank-na 2
 ```
 ### (12)输出
 ```bash
-for format in sintax.fasta rdp.fasta idt-fasta.fasta idt-text.txt blast-notax.fasta; do crabs --export --input filtered.txt --output chondrichthyes_${format} --export-format ${format%%.*}; done
+for format in sintax.fasta blast-notax.fasta; do crabs --export --input filtered.txt --output chondrichthyes_${format} --export-format ${format%%.*}; done
 ```
 ### (13)数据库范围
 ```bash
@@ -56,9 +56,14 @@ crabs --amplicon-length-figure --input filtered.txt --output amplicon-length-fig
 ```
 ### （14）目标序列被下载比例
 ```bash
-crabs --completeness-table --input filtered.txt --output completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species species-list.txt
+crabs --completeness-table --input filtered.txt --output figure/completeness.txt --names ../names.dmp --nodes ../nodes.dmp --species split_part_ac.txt
 ```
 ### (15) 预测扩增效果
 ```bash
-crabs --amplification-efficiency-figure --input merged.txt --amplicons filtered.txt --forward GTTGGTHAATCTCGTGCCAGC --reverse CATAGTAGGGTATCTAATCCTAGTTTG --output amplification-efficiency.png --tax-group Carcharhiniformes
+crabs --amplification-efficiency-figure --input merged.txt --amplicons filtered.txt --forward TCAACCAACCACAAAGACATTGGCAC --reverse AAGATTACAAAAGCGTGGGC --output figure/amplification-efficiency.png --tax-group Carcharhiniformes
+```
+### (16) 拷贝到自己的文件夹
+```bash
+scp -P 8080 -r dell@10.24.22.176:/media/dell/eDNA2/db-training/lzf-COI/figure \
+ /Volumes/Elements/1_guanggong_20240424/环境DNA培训课件/try1-db-traning/
 ```
