@@ -1,9 +1,18 @@
 ## obitools 4 处理测序数据
-### 看一下生数据并进行质控
+### 看一下生数据并进行质控, 运行一下代码你会得到两个html文件
 ```bash
 #gzip -cd *.gz | head
-head sample1.fastq
-fastqc sample1.fastq
+head sample1.fq
+fastqc sample1.fq
+fastqc sample2.fq
+```
+### 拷贝html文件到自己的电脑
+```bahs
+scp -P 8080 dell@10.24.22.176:/media/dell/eDNA2/db-training/yourfolder/sample1_fastqc.html \
+ /path/yo/your/directory/
+
+scp -P 8080 dell@10.24.22.176:/media/dell/eDNA2/db-training/yourfolder/sample2_fastqc.html \
+ /path/yo/your/directory/
 ```
 
 ### R1、R2端数据合并
