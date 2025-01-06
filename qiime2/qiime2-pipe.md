@@ -122,7 +122,7 @@ qiime tools view temp/asv.qzv
 
 ### 用sintax和blast分别进行物种识别
 ```bash
-vsearch --threads 4 --sintax results/sequences.fasta --db ../ref/fish_sintax.fasta --sintax_cutoff 0.7 --tabbedout results/sintax.tsv
+vsearch --threads 4 --sintax results/sequences.fasta --db ../ref/fish_sintax.fasta --sintax_cutoff 0.7 --tabbedout sintax-q2.tsv
 
 blastn -task blastn -num_threads 4 -evalue 1000 -word_size 7 -max_target_seqs 500 -db ../ref/fish_blast -outfmt "6 qseqid sseqid evalue length pident nident score bitscore" -out results/blast.out -query results/sequences.fasta
 
@@ -133,7 +133,10 @@ rm results/headers
 rm results/blast.out
 awk '{if ($4 >= 100 && $5 >= 90) { print } }' results/blast_result.tsv > results/blast_result_sorted.tsv 
 ```
-
+### 下游分析第一步
+```bash
+Rscript ../make-OTU-qiime2.R --sintax results/sintax.tsv --blast results/blast_result_sorted.tsv --taxonomy ../ref/reference-library-master.txt --otus results/tab.csv --output results/q2_full_OTUs.csv
+```
 
 
 

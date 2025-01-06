@@ -65,7 +65,7 @@ obigrep -l 150 ali.assigned.simple.clean.fasta \
 ### 物种注释
 #### vsearch
 ```bash
-vsearch --threads 4 --sintax ali.assigned.simple.clean.l150.fasta --db ref/fish_sintax.fasta --sintax_cutoff 0.7 --tabbedout sintax.tsv
+vsearch --threads 4 --sintax ali.assigned.simple.clean.l150.fasta --db ../ref/fish_sintax.fasta --sintax_cutoff 0.7 --tabbedout sintax.tsv
 ```
 #### blast
 ```bash
@@ -79,6 +79,7 @@ printf "qseqid\tsseqidLocal\tevalueLocal\tlengthLocal\tpidentLocal\tnidentLocal\
 cat headers blast.out > blast_result.tsv
 rm blast.out
 rm headers
+awk '{if ($5 >= 90 && $4 >= 100) { print } }' blast_result.tsv > blast_result_sorted.tsv 
 ```
 ### 导出OTU表
 ```bash
@@ -86,5 +87,5 @@ Rscript export_tab.R --input ali.assigned.simple.clean.l150.fasta --output tab.c
 ```
 ### 下游分析第一步
 ```bash
-Rscript make-OTU.R --sintax sintax.tsv --blast blast_result.tsv --taxonomy assigned_uniq_ref_elas.tsv --otus tab.csv --output 2nd_full_OTUs.csv
+Rscript ../make-OTU-obi3.R --sintax sintax.tsv --blast blast_result_sorted.tsv --taxonomy ../ref/reference-library-master.txt --otus tab.csv --output obi_full_OTUs.csv
 ```
