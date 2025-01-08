@@ -81,6 +81,12 @@ rm blast.out
 rm headers
 awk '{if ($5 >= 90 && $4 >= 100) { print } }' blast_result.tsv > blast_result_sorted.tsv 
 ```
+### 切换一下conda环境
+```bash
+export PATH="/BioAnalyse/miniconda3/envs/be/bin:$PATH"
+conda activate be
+```
+
 ### 导出OTU表
 ```bash
 Rscript export_tab.R --input ali.assigned.simple.clean.l150.fasta --output tab.csv

@@ -133,6 +133,12 @@ rm results/headers
 rm results/blast.out
 awk '{if ($4 >= 100 && $5 >= 90) { print } }' results/blast_result.tsv > results/blast_result_sorted.tsv 
 ```
+### 切换一下conda环境
+```bash
+export PATH="/BioAnalyse/miniconda3/envs/be/bin:$PATH"
+conda activate be
+```
+
 ### 下游分析第一步
 ```bash
 Rscript ../make-OTU-qiime2.R --sintax results/sintax.tsv --blast results/blast_result_sorted.tsv --taxonomy ../ref/reference-library-master.txt --otus results/tab.csv --output results/q2_full_OTUs.csv
