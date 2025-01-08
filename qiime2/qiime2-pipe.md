@@ -72,8 +72,8 @@ qiime tools view temp/trimmed-seqs.qzv
 ```bash
 qiime dada2 denoise-paired \
     --i-demultiplexed-seqs temp/trimmed-seqs.qza \
-    --p-trim-left-f 0 --p-trunc-len-f 0 \
-    --p-trim-left-r 0 --p-trunc-len-r 0 \
+    --p-trim-left-f 0 --p-trunc-len-f 140 \
+    --p-trim-left-r 0 --p-trunc-len-r 140 \
     --p-n-reads-learn 100000 \
     --p-max-ee-f 2.0 \
     --p-max-ee-r 2.0 \
