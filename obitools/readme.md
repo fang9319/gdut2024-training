@@ -89,7 +89,7 @@ conda activate be
 
 ### 导出OTU表
 ```bash
-Rscript ../export_tab.R --input ali.assigned.simple.clean.l150.fasta --output tab.csv
+Rscript ../export_tab.R --input ali.assigned.simple.clean.c5.l100.fasta --output tab.csv
 ```
 ### 下游分析第一步
 ```bash
